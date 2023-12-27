@@ -53,7 +53,7 @@ class NetworkModule {
             .addInterceptor { chain ->
             val originalRequest = chain.request()
             val modifiedRequest = originalRequest.newBuilder()
-                .header("Authorization", "Bearer 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")
+                .header("Authorization", "Bearer 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")
                 .build()
             chain.proceed(modifiedRequest)
         }

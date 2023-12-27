@@ -1,5 +1,6 @@
 package com.example.githubrepoapp.data.repo.cache.repositories
 
+import androidx.paging.PagingSource
 import com.example.githubrepoapp.data.cache.database.dao.RepositoryDao
 import com.example.githubrepoapp.data.cache.mappers.RepositoriesCacheMapper
 import com.example.githubrepoapp.data.network.models.RepositoryModel
@@ -19,9 +20,10 @@ class RepositoriesDaoServiceImpl @Inject constructor(
         return repositoryDao.update(repositoriesCacheMapper.mapToEntity(model))
     }
 
-    override suspend fun getAllRepos(): List<RepositoryModel>? {
-        return repositoryDao.getAllRepo()?.let {repositoriesCacheMapper.entityListToRepositoriesList(it) }
-    }
+
+//    override suspend fun getAllRepos(): List<RepositoryModel>? {
+//        return repositoryDao.getAllRepo()?. {repositoriesCacheMapper.mapToEntity(it) }
+//    }
 }
 
 

@@ -8,7 +8,7 @@ interface RepositoriesDaoService {
 
     suspend fun updateRepo(model : RepositoryModel): Int
 
-    suspend fun getAllRepos(): List<RepositoryModel>?
+//    suspend fun getAllRepos(): List<RepositoryModel>
 }
 
 

@@ -11,8 +11,8 @@ import com.example.githubrepoapp.data.network.models.RepositoryModel
 @Dao
 interface RepositoryDao {
 
-    @Query("SELECT * FROM repositories")
-    suspend fun getAllRepo(): List<RepositoriesCacheEntity>?
+    @Query("SELECT * FROM repositories LIMIT :limit OFFSET :offset ")
+    suspend fun getAllRepo(limit: Int, offset: Int): List<RepositoriesCacheEntity>?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(model: List<RepositoriesCacheEntity>):LongArray

@@ -2,6 +2,9 @@ package com.example.githubrepoapp.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.compose.LazyPagingItems
 import com.example.githubrepoapp.data.network.models.RepositoryModel
 import com.example.githubrepoapp.data.utils.ApiResult
 import com.example.githubrepoapp.data.utils.ErrorStatus
@@ -9,12 +12,10 @@ import com.example.githubrepoapp.di.IoDispatcher
 import com.example.githubrepoapp.domain.home.GetRepositoryListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,10 +27,16 @@ class HomeViewModel @Inject constructor(
     private var _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
 
+    var data : LazyPagingItems<RepositoryModel>?=null
+
+    fun checkIfRepoDbNotEmpty(){
+        if (data == null ){
+            getRepositories()
+        }
+    }
     fun getRepositories() {
-        getRepositoryListUseCase.run()
-            .onStart {_state.value = _state.value.copy(isLoading = true) }
-            .onEach {
+        viewModelScope.launch {
+            getRepositoryListUseCase.run().collect{
                 when (it) {
                     is ApiResult.Error -> {
                         when (it.errorStatus) {
@@ -61,15 +68,14 @@ class HomeViewModel @Inject constructor(
                     }
 
                     is ApiResult.Success -> {
-                        _state.value = state.value.copy(
-                            isLoading = false,
-                            data = it.value as List<RepositoryModel>
-                        )
+                       _state.value = _state.value.copy(
+                           isLoading = false , data =  getRepos()
+                       )
                     }
                 }
-            }.flowOn(dispatcher).launchIn(viewModelScope)
+            }
+        }
     }
 
-
-
+     fun getRepos() : Flow<PagingData<RepositoryModel>> = getRepositoryListUseCase.getReposFromDb().cachedIn(viewModelScope)
 }

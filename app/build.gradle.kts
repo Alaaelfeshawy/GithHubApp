@@ -80,6 +80,8 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.paging:paging-compose:3.2.1")
+//    implementation("androidx.paging:paging-common-ktx:3.2.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -118,8 +120,8 @@ dependencies {
     //room
     kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
-   /* testImplementation("androidx.room:room-testing:2.6.1")
-    implementation("androidx.room:room-paging:2.6.1")*/
+//    testImplementation("androidx.room:room-testing:2.6.1")
+    implementation("androidx.room:room-paging:2.6.1")
 
     implementation("androidx.navigation:navigation-compose:2.7.6")
     //mockk fpr testing

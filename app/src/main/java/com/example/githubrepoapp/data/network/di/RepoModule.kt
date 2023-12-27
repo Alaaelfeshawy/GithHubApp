@@ -1,5 +1,7 @@
 package com.example.githubrepoapp.data.network.di
 
+import com.example.githubrepoapp.data.cache.database.dao.RepositoryDao
+import com.example.githubrepoapp.data.cache.mappers.RepositoriesCacheMapper
 import com.example.githubrepoapp.data.network.apis.DetailsAPI
 import com.example.githubrepoapp.data.network.apis.HomeAPI
 import com.example.githubrepoapp.data.network.apis.IssuesApi
@@ -20,8 +22,10 @@ import dagger.hilt.components.SingletonComponent
 class RepoModule {
 
     @Provides
-    fun provideHomeModule(homeAPI: HomeAPI, homeDaoService: RepositoriesDaoService,): IHomeRepo {
-        return HomeRepoImpl(homeAPI,homeDaoService)
+    fun provideHomeModule(homeAPI: HomeAPI, homeDaoService: RepositoriesDaoService,
+                           repositoriesCacheMapper: RepositoriesCacheMapper, repositoryDao: RepositoryDao
+    ): IHomeRepo {
+        return HomeRepoImpl(homeAPI,homeDaoService , repositoriesCacheMapper,repositoryDao)
     }
 
     @Provides
