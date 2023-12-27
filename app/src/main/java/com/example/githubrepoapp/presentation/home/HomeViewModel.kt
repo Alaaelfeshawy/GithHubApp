@@ -2,7 +2,6 @@ package com.example.githubrepoapp.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.compose.LazyPagingItems
 import com.example.githubrepoapp.data.network.models.RepositoryModel
@@ -12,7 +11,6 @@ import com.example.githubrepoapp.di.IoDispatcher
 import com.example.githubrepoapp.domain.home.GetRepositoryListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -29,9 +27,13 @@ class HomeViewModel @Inject constructor(
 
     var data : LazyPagingItems<RepositoryModel>?=null
 
-    fun checkIfRepoDbNotEmpty(){
-        if (data == null ){
-            getRepositories()
+    init {
+        viewModelScope.launch {
+            if (getRepositoryListUseCase.getReposSizeInDB()!! > 0){
+                getReposFromDb()
+            }else{
+                getRepositories()
+            }
         }
     }
     fun getRepositories() {
@@ -68,14 +70,16 @@ class HomeViewModel @Inject constructor(
                     }
 
                     is ApiResult.Success -> {
-                       _state.value = _state.value.copy(
-                           isLoading = false , data =  getRepos()
-                       )
+                        if (it.value){
+                            getReposFromDb()
+                        }
                     }
                 }
             }
         }
     }
 
-     fun getRepos() : Flow<PagingData<RepositoryModel>> = getRepositoryListUseCase.getReposFromDb().cachedIn(viewModelScope)
+     private fun getReposFromDb() {
+         _state.value = _state.value.copy(data = getRepositoryListUseCase.getReposFromDb().cachedIn(viewModelScope))
+     }
 }

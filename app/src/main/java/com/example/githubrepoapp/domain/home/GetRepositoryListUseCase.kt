@@ -10,12 +10,13 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetRepositoryListUseCase @Inject constructor(private val homeRepoImpl: IHomeRepo)
-    : BaseUseCase<PagingSource<Int, RepositoryModel>?>()
+    : BaseUseCase<Boolean>()
 {
-    override fun run(): Flow<ApiResult<PagingSource<Int, RepositoryModel>?>> {
+    override fun run():  Flow<ApiResult<Boolean>> {
         return homeRepoImpl.getRepositoryList()
     }
 
     fun getReposFromDb(): Flow<PagingData<RepositoryModel>> = homeRepoImpl.getRepositoryFromDB()
+    suspend fun getReposSizeInDB(): Int? = homeRepoImpl.getReposSizeInDB()
 
 }

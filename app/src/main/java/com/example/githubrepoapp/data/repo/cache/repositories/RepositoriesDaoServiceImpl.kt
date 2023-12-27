@@ -21,9 +21,9 @@ class RepositoriesDaoServiceImpl @Inject constructor(
     }
 
 
-//    override suspend fun getAllRepos(): List<RepositoryModel>? {
-//        return repositoryDao.getAllRepo()?. {repositoriesCacheMapper.mapToEntity(it) }
-//    }
+    override suspend fun getReposSizeInDB(): Int? {
+        return repositoriesCacheMapper.entityListToRepositoriesList(repositoryDao.getAllRepo()).size
+    }
 }
 
 

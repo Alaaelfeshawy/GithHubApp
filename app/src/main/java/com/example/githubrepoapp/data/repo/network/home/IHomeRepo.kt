@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface IHomeRepo {
 
-    fun getRepositoryList() : Flow<ApiResult<PagingSource<Int, RepositoryModel>?>>
+    fun getRepositoryList() :  Flow<ApiResult<Boolean>>
 
     fun getRepositoryFromDB(): Flow<PagingData<RepositoryModel>>
+    suspend fun getReposSizeInDB(): Int?
 }
