@@ -26,13 +26,13 @@ fun RepositoryList(navController: NavController, data : LazyPagingItems<Reposito
 
             when (loadState.append) {
                 is LoadState.NotLoading -> Unit
-                is LoadState.Loading -> item{
+                is LoadState.Loading -> item {
                     LoadingItem()
                 }
 
                 is LoadState.Error -> item {
                     ErrorItem(
-                        message =  "Something wrong happens please retry again",
+                        message = stringResource(R.string.something_wrong_happens),
                     )
 
                 }

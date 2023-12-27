@@ -1,10 +1,8 @@
 package com.example.githubrepoapp.presentation.details
 
-import com.example.githubrepoapp.data.network.ApiResult
 import com.example.githubrepoapp.data.network.models.RepositoryDetailsModel
-import com.example.githubrepoapp.data.network.models.RepositoryModel
+import com.example.githubrepoapp.data.utils.ApiResult
 import com.example.githubrepoapp.domain.detail.GetRepositoryDetailsUseCase
-import com.example.githubrepoapp.domain.home.GetRepositoryListUseCase
 import com.example.githubrepoapp.presentation.utils.BaseUnitTest
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -35,7 +33,7 @@ class DetailsViewModelTest : BaseUnitTest() {
 
     @Test
     fun `should getRepositoryDetails from useCase then return success state with data`() = runTest {
-         every { useCase.execute(param) } returns flow {
+         every { useCase.run(param) } returns flow {
             emit(ApiResult.Success(mockSuccessResponse))
         }
 
@@ -48,7 +46,7 @@ class DetailsViewModelTest : BaseUnitTest() {
 
     @Test
     fun `should getRepositoryDetails from useCase then return success state with empty data`() = runTest {
-         every { useCase.execute(param) } returns flow {
+         every { useCase.run(param) } returns flow {
             emit(ApiResult.Success(null))
         }
 
@@ -61,8 +59,8 @@ class DetailsViewModelTest : BaseUnitTest() {
 
     @Test
     fun `should getRepositoryDetails from useCase then return error state `() = runTest {
-         every { useCase.execute(param) } returns flow {
-            emit(ApiResult.GenericError(1,errorMessage))
+         every { useCase.run(param) } returns flow {
+            emit(ApiResult.Error(1,errorMessage))
         }
 
         SUT.getRepositoryDetails("owner","repo")
@@ -74,8 +72,8 @@ class DetailsViewModelTest : BaseUnitTest() {
 
     @Test
     fun `should getRepositoryDetails from useCase then return network error state `() = runTest {
-        every { useCase.execute(param)} returns flow {
-            emit(ApiResult.NetworkError(networkError))
+        every { useCase.run(param)} returns flow {
+            emit(ApiResult.Error(code = null , networkError ,))
         }
 
         SUT.getRepositoryDetails("owner","repo")
@@ -87,7 +85,7 @@ class DetailsViewModelTest : BaseUnitTest() {
 
     @Test
     fun `should getRepositoryDetails from useCase then loading appears `() = runTest {
-        every {useCase.execute(param) } returns flow { emit(ApiResult.Success(mockSuccessResponse)) }
+        every {useCase.run(param) } returns flow { emit(ApiResult.Success(mockSuccessResponse)) }
 
         SUT.getRepositoryDetails("owner","repo")
 
@@ -96,7 +94,7 @@ class DetailsViewModelTest : BaseUnitTest() {
 
     @Test
     fun `should getRepositoryDetails from useCase after getting data loading disappears `() = runTest {
-        every {useCase.execute(param) } returns flow { emit(ApiResult.Success(mockSuccessResponse)) }
+        every {useCase.run(param) } returns flow { emit(ApiResult.Success(mockSuccessResponse)) }
 
         SUT.getRepositoryDetails("owner","repo")
 

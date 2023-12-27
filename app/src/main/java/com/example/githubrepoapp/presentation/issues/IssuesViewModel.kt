@@ -26,10 +26,8 @@ class IssuesViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     fun getIssues(owner : String , repo : String){
+        _state.value=_state.value.copy(isLoading = true)
         getIssuesUseCase.run(GetIssuesUseCase.Params(owner, repo))
-            .onStart {
-                _state.value=_state.value.copy(isLoading = true)
-            }
             .onEach {
                 when (it) {
                     is ApiResult.Error -> {

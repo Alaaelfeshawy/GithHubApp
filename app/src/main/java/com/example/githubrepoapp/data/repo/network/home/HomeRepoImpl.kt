@@ -24,7 +24,7 @@ class HomeRepoImpl @Inject constructor(
 
     override fun getRepositoryList(): Flow<ApiResult<Boolean>> {
         return  flow {
-                safeApiCall { homeAPI.getRepositoryList() }.let {
+            safeApiCall { homeAPI.getRepositoryList() }.let {
                     when (it) {
                         is ApiResult.Error -> {
                             emit(it)

@@ -65,11 +65,6 @@ fun RepositoryItem(navController: NavController, model: RepositoryModel?) {
                         style = TextStyle(fontSize = 18.sp),
                         modifier = Modifier.padding(top = 8.dp)
                     )
-                    Text(
-                        text = "${model?.id}",
-                        style = TextStyle(fontSize = 18.sp),
-                        modifier = Modifier.padding(top = 8.dp)
-                    )
                 }
                 Column(
                     modifier = Modifier

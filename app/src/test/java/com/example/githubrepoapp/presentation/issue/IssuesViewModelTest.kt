@@ -1,7 +1,7 @@
 package com.example.githubrepoapp.presentation.issue
 
-import com.example.githubrepoapp.data.network.ApiResult
 import com.example.githubrepoapp.data.network.models.IssueModel
+import com.example.githubrepoapp.data.utils.ApiResult
 import com.example.githubrepoapp.domain.issue.GetIssuesUseCase
 import com.example.githubrepoapp.presentation.issues.IssuesViewModel
 import com.example.githubrepoapp.presentation.utils.BaseUnitTest
@@ -34,7 +34,7 @@ class IssuesViewModelTest : BaseUnitTest() {
 
     @Test
     fun `should getIssues from useCase then return success state with data`() = runTest {
-         every { useCase.execute(param) } returns flow {
+         every { useCase.run(param) } returns flow {
             emit(ApiResult.Success(mockSuccessResponse))
         }
 
@@ -47,7 +47,7 @@ class IssuesViewModelTest : BaseUnitTest() {
 
     @Test
     fun `should getIssues from useCase then return success state with empty data`() = runTest {
-         every { useCase.execute(param) } returns flow {
+         every { useCase.run(param) } returns flow {
             emit(ApiResult.Success(null))
         }
 
@@ -60,8 +60,8 @@ class IssuesViewModelTest : BaseUnitTest() {
 
     @Test
     fun `should getIssues from useCase then return error state `() = runTest {
-         every { useCase.execute(param) } returns flow {
-            emit(ApiResult.GenericError(1,errorMessage))
+         every { useCase.run(param) } returns flow {
+            emit(ApiResult.Error(1,errorMessage))
         }
 
         SUT.getIssues("owner","repo")
@@ -73,8 +73,8 @@ class IssuesViewModelTest : BaseUnitTest() {
 
     @Test
     fun `should getIssues from useCase then return network error state `() = runTest {
-        every { useCase.execute(param)} returns flow {
-            emit(ApiResult.NetworkError(networkError))
+        every { useCase.run(param)} returns flow {
+            emit(ApiResult.Error(code = 2 , networkError))
         }
 
         SUT.getIssues("owner","repo")
@@ -86,7 +86,7 @@ class IssuesViewModelTest : BaseUnitTest() {
 
     @Test
     fun `should getIssues from useCase then loading appears `() = runTest {
-        every {useCase.execute(param) } returns flow { emit(ApiResult.Success(mockSuccessResponse)) }
+        every {useCase.run(param) } returns flow { emit(ApiResult.Success(mockSuccessResponse)) }
 
         SUT.getIssues("owner","repo")
 
@@ -95,7 +95,7 @@ class IssuesViewModelTest : BaseUnitTest() {
 
     @Test
     fun `should getIssues from useCase after getting data loading disappears `() = runTest {
-        every {useCase.execute(param) } returns flow { emit(ApiResult.Success(mockSuccessResponse)) }
+        every {useCase.run(param) } returns flow { emit(ApiResult.Success(mockSuccessResponse)) }
 
         SUT.getIssues("owner","repo")
 

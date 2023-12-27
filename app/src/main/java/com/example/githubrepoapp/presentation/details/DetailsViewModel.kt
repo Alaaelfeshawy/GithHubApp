@@ -26,11 +26,10 @@ class DetailsViewModel @Inject constructor(
     val state = _state.asStateFlow()
 
     fun getRepositoryDetails(owner:String , repo : String){
+        _state.value = _state.value.copy(isLoading = true)
         getRepositoryDetailsUseCase.run(
             GetRepositoryDetailsUseCase.Params(owner, repo)
-        ).onStart {
-            _state.value = _state.value.copy(isLoading = true)
-        }.onEach {
+        ).onEach {
             when(it){
                     is ApiResult.Error -> {
                         when (it.errorStatus) {

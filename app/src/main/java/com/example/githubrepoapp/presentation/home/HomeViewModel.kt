@@ -11,6 +11,7 @@ import com.example.githubrepoapp.di.IoDispatcher
 import com.example.githubrepoapp.domain.home.GetRepositoryListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -19,24 +20,25 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getRepositoryListUseCase: GetRepositoryListUseCase,
-    @IoDispatcher private val dispatcher: CoroutineDispatcher
+    @IoDispatcher private val dispatcher: CoroutineDispatcher,
 ) : ViewModel(){
 
     private var _state = MutableStateFlow(HomeState())
     val state = _state.asStateFlow()
 
-    var data : LazyPagingItems<RepositoryModel>?=null
-
     init {
-        viewModelScope.launch {
-            if (getRepositoryListUseCase.getReposSizeInDB()!! > 0){
-                getReposFromDb()
-            }else{
-                getRepositories()
-            }
-        }
+        getRepo()
     }
-    fun getRepositories() {
+   fun getRepo(){
+       viewModelScope.launch {
+           if (getRepositoryListUseCase.getReposSizeInDB()!! > 0){
+               getReposFromDb()
+           }else{
+               getRepositories()
+           }
+       }
+   }
+    private fun getRepositories() {
         viewModelScope.launch {
             getRepositoryListUseCase.run().collect{
                 when (it) {
@@ -80,6 +82,7 @@ class HomeViewModel @Inject constructor(
     }
 
      private fun getReposFromDb() {
-         _state.value = _state.value.copy(data = getRepositoryListUseCase.getReposFromDb().cachedIn(viewModelScope))
+         val result = getRepositoryListUseCase.getReposFromDb().cachedIn(viewModelScope)
+         _state.value = _state.value.copy(isLoading = false , data = result)
      }
 }
