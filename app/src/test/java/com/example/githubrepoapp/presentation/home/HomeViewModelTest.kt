@@ -33,6 +33,8 @@ class HomeViewModelTest : BaseUnitTest(){
     @MockK
     private lateinit var mockResponse : List<RepositoryModel>
 
+    val pagingData: Pager<Int, RepositoryModel> = mockk()
+
     @Before
     fun before(){
         SUT = HomeViewModel(useCase , testDispatcher)
@@ -41,7 +43,6 @@ class HomeViewModelTest : BaseUnitTest(){
     @Test
     fun `getRepositories success`() = runTest {
         // Given
-        val pagingData: Pager<Int, RepositoryModel> = mockk()
         // Stub the getRepositoryListUseCase to return a flow
         coEvery { useCase.run() } returns flowOf(ApiResult.Success(pagingData))
 
