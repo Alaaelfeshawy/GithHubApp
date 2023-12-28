@@ -2,7 +2,10 @@ package com.example.githubrepoapp.presentation.details
 
 import com.example.githubrepoapp.data.network.models.RepositoryDetailsModel
 import com.example.githubrepoapp.data.utils.ApiResult
+import com.example.githubrepoapp.data.utils.ErrorStatus
 import com.example.githubrepoapp.domain.detail.GetRepositoryDetailsUseCase
+import com.example.githubrepoapp.presentation.base.ErrorNetwork
+import com.example.githubrepoapp.presentation.base.ErrorToast
 import com.example.githubrepoapp.presentation.utils.BaseUnitTest
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -67,20 +70,20 @@ class DetailsViewModelTest : BaseUnitTest() {
 
         advanceUntilIdle()
 
-//        assertEquals( errorMessage , SUT.state.value.errorMessage)
+        assertEquals( errorMessage , (SUT.state.value.errorView as ErrorToast).errorMessage)
     }
 
     @Test
     fun `should getRepositoryDetails from useCase then return network error state `() = runTest {
         every { useCase.run(param)} returns flow {
-            emit(ApiResult.Error(code = null , networkError ,))
+            emit(ApiResult.Error(code = null , networkError , ErrorStatus.No_INTERNET_CONNECTION))
         }
 
         SUT.getRepositoryDetails("owner","repo")
 
         advanceUntilIdle()
 
-//        assertEquals( networkError , SUT.state.value.errorMessage)
+        assertEquals(networkError , (SUT.state.value.errorView as ErrorNetwork).errorMessage)
     }
 
     @Test

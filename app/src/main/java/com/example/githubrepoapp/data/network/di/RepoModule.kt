@@ -1,6 +1,7 @@
 package com.example.githubrepoapp.data.network.di
 
 import android.content.Context
+import com.example.githubrepoapp.data.cache.database.RepositoryPagingSource
 import com.example.githubrepoapp.data.cache.database.dao.RepositoryDao
 import com.example.githubrepoapp.data.cache.mappers.RepositoriesCacheMapper
 import com.example.githubrepoapp.data.network.apis.DetailsAPI
@@ -25,21 +26,19 @@ import dagger.hilt.components.SingletonComponent
 class RepoModule {
 
     @Provides
-    fun provideHomeModule(homeAPI: HomeAPI, homeDaoService: RepositoriesDaoService,
-                           repositoriesCacheMapper: RepositoriesCacheMapper, repositoryDao: RepositoryDao,
-                           connectivityChecker: ConnectivityChecker
+    fun provideHomeModule(homeAPI: HomeAPI, homeDaoService: RepositoriesDaoService, connectivityChecker: ConnectivityChecker
     ): IHomeRepo {
-        return HomeRepoImpl(homeAPI,homeDaoService , repositoriesCacheMapper,repositoryDao,connectivityChecker)
+        return HomeRepoImpl(homeAPI,homeDaoService ,connectivityChecker)
     }
 
     @Provides
-    fun provideDetailsModule(detailsAPI: DetailsAPI): IRepositoryDetailsRepo {
-        return RepositoryDetailsRepoImpl(detailsAPI)
+    fun provideDetailsModule(detailsAPI: DetailsAPI , connectivityChecker: ConnectivityChecker): IRepositoryDetailsRepo {
+        return RepositoryDetailsRepoImpl(detailsAPI , connectivityChecker)
     }
 
     @Provides
-    fun provideIssuesModule(issuesApi: IssuesApi): IIssuesRepo {
-        return IssuesRepoImpl(issuesApi)
+    fun provideIssuesModule(issuesApi: IssuesApi, connectivityChecker: ConnectivityChecker): IIssuesRepo {
+        return IssuesRepoImpl(issuesApi,connectivityChecker)
     }
 
     @Provides

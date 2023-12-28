@@ -20,7 +20,4 @@ interface RepositoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(model: List<RepositoriesCacheEntity>):LongArray
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun update(model: RepositoriesCacheEntity):Int
-
 }

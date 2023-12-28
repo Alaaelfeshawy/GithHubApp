@@ -34,13 +34,19 @@ open class BaseViewModel<T> :ViewModel() {
             )
             ErrorStatus.No_INTERNET_CONNECTION -> _state.value = state.value.copy(
                 isLoading = false,
-                errorView = ErrorFullScreen(error.errorMessage ?: "No internet connection")
+                errorView = ErrorNetwork(error.errorMessage ?: "No internet connection")
+            )
+
+            ErrorStatus.EMPTY_DATA -> _state.value = state.value.copy(
+                isLoading = false,
+                errorView = EmptyData
             )
 
             null -> _state.value = state.value.copy(
                 isLoading = false,
                 errorView = ErrorToast(error.errorMessage ?: "Unknown Error")
             )
+
         }
     }
 
