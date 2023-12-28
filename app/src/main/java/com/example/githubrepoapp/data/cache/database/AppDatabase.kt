@@ -11,7 +11,7 @@ import com.example.githubrepoapp.data.cache.models.RepoDetailCacheEntity
 import com.example.githubrepoapp.data.cache.models.RepositoriesCacheEntity
 
 @TypeConverters(value = [DataConverter::class])
-@Database(entities = [RepoDetailCacheEntity::class , IssuesCacheEntity::class , RepositoriesCacheEntity::class ], version = 1)
+@Database(entities = [RepoDetailCacheEntity::class , IssuesCacheEntity::class , RepositoriesCacheEntity::class ], version = 2)
 abstract class AppDatabase: RoomDatabase() {
 
     abstract fun detailsDao(): DetailsDao
