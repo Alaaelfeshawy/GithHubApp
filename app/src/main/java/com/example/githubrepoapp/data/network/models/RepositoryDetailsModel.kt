@@ -1,5 +1,7 @@
 package com.example.githubrepoapp.data.network.models
 
+import androidx.paging.NullPaddedList
+
 data class RepositoryDetailsModel(
     val description: String?=null,
     val forks_count: Int?=null,
@@ -14,5 +16,6 @@ data class RepositoryDetailsModel(
     val updated_at: String?=null,
     val watchers: Int?=null,
     val watchers_count: Int?=null,
+    val avatar : String?=null
 )
 

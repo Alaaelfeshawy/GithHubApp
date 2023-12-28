@@ -9,7 +9,10 @@ import com.example.githubrepoapp.data.cache.mappers.RepositoriesCacheMapper
 import com.example.githubrepoapp.data.network.apis.HomeAPI
 import com.example.githubrepoapp.data.network.models.RepositoryModel
 import com.example.githubrepoapp.data.repo.cache.repositories.RepositoriesDaoService
+import com.example.githubrepoapp.data.repo.isNetworkAvailable
+import com.example.githubrepoapp.data.repo.network.ConnectivityChecker
 import com.example.githubrepoapp.data.utils.ApiResult
+import com.example.githubrepoapp.data.utils.ErrorStatus
 import com.example.githubrepoapp.data.utils.safeApiCall
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -19,12 +22,20 @@ class HomeRepoImpl @Inject constructor(
     private val homeAPI: HomeAPI,
     private val homeDaoService: RepositoriesDaoService,
     private val repositoriesCacheMapper: RepositoriesCacheMapper,
-    private val repositoryDao: RepositoryDao
+    private val repositoryDao: RepositoryDao,
+    private val connectivityChecker: ConnectivityChecker
     ) : IHomeRepo {
 
-    override fun getRepositoryList(): Flow<ApiResult<Boolean>> {
+    override fun getRepositoryList(): Flow<ApiResult<Pager<Int, RepositoryModel>>> {
         return  flow {
-            safeApiCall { homeAPI.getRepositoryList() }.let {
+            if(homeDaoService.getReposSizeInDB()!!>0){
+                emit(ApiResult.Success(getRepositoryFromDB()))
+            }
+            else if (!connectivityChecker.isConnected()){
+                emit(ApiResult.Error(errorMessage = "No Internet Connection" , errorStatus = ErrorStatus.No_INTERNET_CONNECTION))
+            }
+            else{
+                safeApiCall { homeAPI.getRepositoryList() }.let {
                     when (it) {
                         is ApiResult.Error -> {
                             emit(it)
@@ -32,11 +43,13 @@ class HomeRepoImpl @Inject constructor(
 
                         is ApiResult.Success -> {
                             homeDaoService.insertRepos(it.value)
-                            emit(ApiResult.Success(true))
+                            emit(ApiResult.Success(getRepositoryFromDB()))
                         }
                     }
 
                 }
+
+            }
         }
     }
 
@@ -49,8 +62,6 @@ class HomeRepoImpl @Inject constructor(
 
     override fun getRepositoryFromDB() =  Pager(config = PagingConfig(pageSize = 10,
         enablePlaceholders = true),
-        pagingSourceFactory = {
-            getRepositoryPagingSource()
-        }
-    ).flow
+        pagingSourceFactory = { getRepositoryPagingSource() }
+    )
 }

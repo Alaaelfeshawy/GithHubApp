@@ -1,5 +1,6 @@
 package com.example.githubrepoapp.data.repo.network.home
 
+import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import com.example.githubrepoapp.data.network.models.RepositoryModel
@@ -9,8 +10,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface IHomeRepo {
 
-    fun getRepositoryList() :  Flow<ApiResult<Boolean>>
+    fun getRepositoryList() :  Flow<ApiResult<Pager<Int, RepositoryModel>>>
 
-    fun getRepositoryFromDB(): Flow<PagingData<RepositoryModel>>
+    fun getRepositoryFromDB(): Pager<Int, RepositoryModel>
     suspend fun getReposSizeInDB(): Int?
 }

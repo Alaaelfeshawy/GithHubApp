@@ -13,6 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.githubrepoapp.NavigationItem
+import com.example.githubrepoapp.presentation.appcomponents.BaseErrorUI
+import com.example.githubrepoapp.presentation.appcomponents.ErrorFullScreenUI
+import com.example.githubrepoapp.presentation.appcomponents.ErrorItem
+import com.example.githubrepoapp.presentation.appcomponents.NetworkErrorUI
+import com.example.githubrepoapp.presentation.base.ErrorFullScreen
+import com.example.githubrepoapp.presentation.base.ErrorItem
+import com.example.githubrepoapp.presentation.base.ErrorNetwork
+import com.example.githubrepoapp.presentation.base.ErrorToast
 
 @Composable
 fun IssueScreen(navController: NavController , owner : String? , repo : String?) {
@@ -31,7 +39,6 @@ fun IssueScreen(navController: NavController , owner : String? , repo : String?)
             Text(text = state.data?.get(0)?.createdAt ?: "")
         }
     }
-    if (state.errorMessage != null){
-        Text(text = state.errorMessage ?: "hello")
-    }
+    state.errorView?.let { BaseErrorUI(it) }
+
 }

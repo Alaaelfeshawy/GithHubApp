@@ -42,6 +42,7 @@ enum class ErrorStatus {
     NO_CONNECTION,
     UNKNOWN_ERROR,
     ERROR,
+    No_INTERNET_CONNECTION
 }
 
 

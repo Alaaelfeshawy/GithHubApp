@@ -50,14 +50,14 @@ class NetworkModule {
             .writeTimeout(30, TimeUnit.SECONDS)
             .retryOnConnectionFailure(true)
             .addInterceptor(loggingInterceptor)
-            .addInterceptor { chain ->
-            val originalRequest = chain.request()
-            val modifiedRequest = originalRequest.newBuilder()
-                .header("Authorization", "Bearer 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")
-                .build()
-            chain.proceed(modifiedRequest)
-        }
-            .build()
+//            .addInterceptor { chain ->
+//            val originalRequest = chain.request()
+//            val modifiedRequest = originalRequest.newBuilder()
+//                .header("Authorization", "Bearer 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")
+//                .build()
+//            chain.proceed(modifiedRequest)
+//        }
+           .build()
     }
 
     @Provides

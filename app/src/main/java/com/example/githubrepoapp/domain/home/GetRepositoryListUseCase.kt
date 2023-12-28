@@ -1,5 +1,6 @@
 package com.example.githubrepoapp.domain.home
 
+import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import com.example.githubrepoapp.data.network.models.RepositoryModel
@@ -10,13 +11,9 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetRepositoryListUseCase @Inject constructor(private val homeRepoImpl: IHomeRepo)
-    : BaseUseCase<Boolean>()
+    : BaseUseCase<Pager<Int, RepositoryModel>>()
 {
-    override fun run():  Flow<ApiResult<Boolean>> {
+    override fun run():  Flow<ApiResult<Pager<Int, RepositoryModel>>> {
         return homeRepoImpl.getRepositoryList()
     }
-
-    fun getReposFromDb(): Flow<PagingData<RepositoryModel>> = homeRepoImpl.getRepositoryFromDB()
-    suspend fun getReposSizeInDB(): Int? = homeRepoImpl.getReposSizeInDB()
-
 }

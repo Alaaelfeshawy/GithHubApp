@@ -1,4 +1,4 @@
-package com.example.githubrepoapp.presentation.appcomponents
+ package com.example.githubrepoapp.presentation.appcomponents
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

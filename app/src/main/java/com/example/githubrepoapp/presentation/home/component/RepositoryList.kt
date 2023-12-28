@@ -17,7 +17,6 @@ import com.example.githubrepoapp.presentation.appcomponents.LoadingItem
 
 @Composable
 fun RepositoryList(navController: NavController, data : LazyPagingItems<RepositoryModel>) {
-
     LazyColumn {
         items(data.itemCount) { index ->
             RepositoryItem(navController = navController, data[index])
@@ -27,7 +26,7 @@ fun RepositoryList(navController: NavController, data : LazyPagingItems<Reposito
             when (loadState.append) {
                 is LoadState.NotLoading -> Unit
                 is LoadState.Loading -> item {
-                    LoadingItem()
+                    LoadingItem(loading = true)
                 }
 
                 is LoadState.Error -> item {
@@ -45,7 +44,7 @@ fun RepositoryList(navController: NavController, data : LazyPagingItems<Reposito
                         Box(
                             modifier = Modifier.fillMaxSize(),
                         ) {
-                            LoadingItem()
+                            LoadingItem(loading = true)
                         }
                     }
 

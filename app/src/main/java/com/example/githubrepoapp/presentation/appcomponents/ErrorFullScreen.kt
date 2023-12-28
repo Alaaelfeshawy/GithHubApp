@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.example.githubrepoapp.R
 
 @Composable
-fun ErrorFullScreen(modifier: Modifier = Modifier, message: String) {
+fun ErrorFullScreenUI(modifier: Modifier = Modifier, message: String) {
     Column(
         modifier = modifier.padding(10.dp).
         background(Color.White).fillMaxWidth().fillMaxHeight(),
