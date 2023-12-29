@@ -3,4 +3,8 @@
     <string name="something_wrong_happens">Something wrong happens please retry again</string>
     <string name="generic_error">Technical issue please try later</string>
     <string name="no_data_found_please_try_later">No Data found please try later</string>
+    <string name="title">Title</string>
+    <string name="author">Author</string>
+    <string name="state">state</string>
+    <string name="created_at">created at</string>
 </resources>
