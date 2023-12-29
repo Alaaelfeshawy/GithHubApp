@@ -27,8 +27,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.githubrepoapp.NavigationItem
 import com.example.githubrepoapp.data.network.models.RepositoryModel
+import com.example.githubrepoapp.route.NavigationItem
 
 @Composable
 fun RepositoryItem(navController: NavController, model: RepositoryModel?) {
