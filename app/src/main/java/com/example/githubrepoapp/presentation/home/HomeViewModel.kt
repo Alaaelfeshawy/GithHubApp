@@ -11,6 +11,7 @@ import com.example.githubrepoapp.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -24,9 +25,6 @@ class HomeViewModel @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher,
     ) : BaseViewModel<Flow<PagingData<RepositoryModel>>>(){
 
-    init {
-        getRepositories()
-    }
     fun getRepositories() {
         _state.value = _state.value.copy(isLoading = true)
         getRepositoryListUseCase.run().onEach{

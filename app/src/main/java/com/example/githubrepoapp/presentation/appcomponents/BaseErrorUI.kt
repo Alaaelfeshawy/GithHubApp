@@ -15,5 +15,6 @@ fun  BaseErrorUI(errorView: ErrorView) {
         is ErrorToast -> TODO()
         is ErrorNetwork -> NetworkErrorUI(message = errorView.errorMessage ?: "")
         null -> TODO()
+        else -> {}
     }
 }

@@ -1,6 +1,7 @@
 package com.example.githubrepoapp.presentation.home
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -21,7 +22,9 @@ import com.example.githubrepoapp.presentation.home.component.RepositoryList
 @Composable
 fun HomesScreen(navController: NavController) {
     val viewModel = hiltViewModel<HomeViewModel>()
-
+    LaunchedEffect(Unit) {
+        viewModel.getRepositories() // Perform side effect in LaunchedEffect
+    }
     val state by viewModel.state.collectAsState()
 
     state.isLoading?.let { LoadingItem(loading = it) }

@@ -24,7 +24,7 @@ suspend fun <T : Any> safeApiCall(
         if (response.isSuccessful && body != null) {
             ApiResult.Success(body)
         } else {
-            ApiResult.Error(code = response.code(), errorMessage = response.message())
+            ApiResult.Error(code = null, errorMessage = "No data found" , ErrorStatus.EMPTY_DATA)
         }
     } catch (throwable: HttpException) {
         ApiResult.Error(code = throwable.code(), errorMessage = throwable.message() , ErrorStatus.ERROR)
@@ -42,7 +42,8 @@ enum class ErrorStatus {
     NO_CONNECTION,
     UNKNOWN_ERROR,
     ERROR,
-    No_INTERNET_CONNECTION
+    No_INTERNET_CONNECTION,
+    EMPTY_DATA
 }
 
 

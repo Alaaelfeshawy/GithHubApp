@@ -6,8 +6,9 @@ import com.example.githubrepoapp.data.cache.database.dao.RepositoryDao
 import com.example.githubrepoapp.data.cache.mappers.RepositoriesCacheMapper
 import com.example.githubrepoapp.data.network.models.RepositoryModel
 import kotlinx.coroutines.delay
+import javax.inject.Inject
 
-class RepositoryPagingSource(
+class RepositoryPagingSource @Inject constructor(
     private val repositoryDao: RepositoryDao,
     private val repositoriesCacheMapper: RepositoriesCacheMapper
 ) : PagingSource<Int, RepositoryModel>() {
