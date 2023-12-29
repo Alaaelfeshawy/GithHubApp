@@ -16,6 +16,5 @@ data class RepositoryDetailsModel(
     val updated_at: String?=null,
     val watchers: Int?=null,
     val watchers_count: Int?=null,
-    val avatar : String?=null
 )
 

@@ -25,7 +25,7 @@ open class BaseViewModel<T> :ViewModel() {
 
             ErrorStatus.UNKNOWN_ERROR -> _state.value = state.value.copy(
                 isLoading = false,
-                errorView = ErrorToast(error.errorMessage ?: "Unknown Error")
+                errorView = ErrorFullScreen(error.errorMessage ?: "Unknown Error")
             )
 
             ErrorStatus.ERROR -> _state.value = state.value.copy(

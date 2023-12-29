@@ -5,5 +5,6 @@ data class OwnerModel(
     val login: String?=null,
     val starred_url: String?=null,
     val type: String?=null,
+    val avatar_url : String?=null
 )
 
