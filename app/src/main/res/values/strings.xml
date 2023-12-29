@@ -7,4 +7,7 @@
     <string name="author">Author</string>
     <string name="state">state</string>
     <string name="created_at">created at</string>
+    <string name="repo_issues_TITLE">Repo Issues</string>
+    <string name="home_title">Home</string>
+    <string name="repo_details_title">Repo Details</string>
 </resources>

@@ -7,9 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.githubrepoapp.R
 import com.example.githubrepoapp.presentation.appcomponents.AppScaffold
 import com.example.githubrepoapp.presentation.appcomponents.BaseErrorUI
 import com.example.githubrepoapp.presentation.appcomponents.LoadingItem
@@ -18,7 +20,7 @@ import com.example.githubrepoapp.presentation.details.components.DetailsComponen
 @Composable
 fun DetailsScreen(navController: NavController , owner : String? , repo : String?) {
 
-    AppScaffold(title = "Repo Details") { innerPadding->
+    AppScaffold(title = stringResource(R.string.repo_details_title)) { innerPadding->
         Column(modifier = Modifier.padding(innerPadding),
             verticalArrangement = Arrangement.spacedBy(16.dp),) {
             val viewModel = hiltViewModel<DetailsViewModel>()

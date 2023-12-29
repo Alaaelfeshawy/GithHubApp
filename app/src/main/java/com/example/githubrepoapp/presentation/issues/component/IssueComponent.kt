@@ -27,6 +27,7 @@ import com.example.githubrepoapp.R
 import com.example.githubrepoapp.data.network.models.IssueModel
 import com.example.githubrepoapp.presentation.extractDate
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CreateIssueList(list : List<IssueModel>) {
     LazyColumn{
