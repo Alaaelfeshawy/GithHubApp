@@ -13,18 +13,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -50,22 +50,41 @@ fun DetailsComponent(navController: NavController, model:RepositoryDetailsModel)
                 color = Color.White
             )
     ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 6.dp)) {
             Row(modifier = Modifier.fillMaxWidth()) {
-                IconWithText(icon = Icons.Default.Star , "stars",model.stargazers_count.toString() ?: "")
+                IconWithText(image = {Image(
+                    imageVector = Icons.Default.Star,
+                    contentDescription = null,
+                    modifier = Modifier.padding(end = 8.dp) .size(15.dp)// Adjust padding as needed
+                )
+            },model.stargazers_count.toString() ?: "")
                 Spacer(modifier = Modifier.width(15.dp))
-                IconWithText(icon = Icons.Default.Star , "forks",model.forks_count.toString() ?: "")
+                IconWithText(image = {Image(
+                    painter = painterResource(id = R.drawable.fork),
+                    contentDescription = null,
+                    modifier = Modifier.padding(end = 8.dp)
+                        .size(15.dp)// Adjust padding as needed
+                )} ,model.forks_count.toString() ?: "")
                 Spacer(modifier = Modifier.width(15.dp))
-                IconWithText(icon = Icons.Default.Star , "watchers",model.watchers_count.toString() ?: "")
+                IconWithText(image = {Image(
+                    painter = painterResource(id = R.drawable.watcher),
+                    contentDescription = null,
+                    modifier = Modifier.padding(end = 8.dp)
+                        .size(15.dp)// Adjust padding as needed
+                )} ,model.watchers_count.toString() ?: "")
 
 
             }
             Row(modifier = Modifier.fillMaxWidth()) {
                 NetworkImageExample(
                     modifier = Modifier.size(150.dp),
-                    imageUrl = model.avatar_url ?: ""
+                    imageUrl = model.owner?.avatar_url ?: ""
                 )
-                Text(text = model.description ?: "" , modifier = Modifier.fillMaxWidth().align(Alignment.CenterVertically))
+                Text(text = model.description ?: "" , modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.CenterVertically))
             }
             Text(text = model.owner?.login ?: "" , modifier = Modifier.padding(horizontal = 16.dp , vertical = 12.dp),
                 style = TextStyle(fontSize = 16.sp , fontWeight = FontWeight.Bold),
@@ -76,8 +95,11 @@ fun DetailsComponent(navController: NavController, model:RepositoryDetailsModel)
                 textAlign = TextAlign.Center
             )
             Button(onClick = {
-            navController.navigate("${NavigationItem.Issue.route}/${model.owner?.login}/${model.name}")
-                             } , modifier =Modifier.width(150.dp).height(40.dp).align(Alignment.CenterHorizontally)
+                navController.navigate("${NavigationItem.Issue.route}/${model.owner?.login}/${model.name}")
+                             } , modifier = Modifier
+                .width(150.dp)
+                .height(40.dp)
+                .align(Alignment.CenterHorizontally)
             ) {
             Text(text = "Go to Issues")
             }
@@ -99,27 +121,55 @@ fun DetailsComponent1() {
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Row(modifier = Modifier.fillMaxWidth()) {
-                IconWithText(Icons.Default.Star , "text" , "count")
+
+                IconWithText({
+                    Image(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = null,
+                        modifier = Modifier.padding(end = 8.dp) .size(15.dp)// Adjust padding as needed
+                    )
+                },   "count")
                 Spacer(modifier = Modifier.width(15.dp))
-                IconWithText(Icons.Default.Star , "text", "count")
+                IconWithText({
+                    Image(
+                        painter = painterResource(id = R.drawable.fork),
+                        contentDescription = null,
+                        modifier = Modifier.padding(end = 8.dp)
+                            .size(15.dp)// Adjust padding as needed
+                    )
+                } ,  "count")
                 Spacer(modifier = Modifier.width(15.dp))
-                IconWithText(Icons.Default.Star , "text", "count")
+                IconWithText( {Image(
+                    painter = painterResource(id = R.drawable.watcher),
+                    contentDescription = null,
+                    modifier = Modifier.padding(end = 8.dp)
+                        .size(15.dp)// Adjust padding as needed
+                )}, "count")
 
             }
-           Row(modifier = Modifier.fillMaxWidth().padding(6.dp)) {
+           Row(modifier = Modifier
+               .fillMaxWidth()
+               .padding(6.dp)) {
                Image(
-                   modifier = Modifier.size(150.dp),
+                   modifier = Modifier
+                       .size(150.dp)
+                       .clip(RoundedCornerShape(16.dp)),
                    painter = painterResource(id = R.drawable.no_data_found),
                    contentDescription = "user image")
                Text(text = "here will set description isa here will set description isahere will set description isahere will set description isahere will set description isa" ,
-                   modifier = Modifier.fillMaxWidth().align(Alignment.CenterVertically))
+                   modifier = Modifier
+                       .fillMaxWidth()
+                       .align(Alignment.CenterVertically))
            }
-           Text(text = "name" , modifier = Modifier.padding(horizontal = 16.dp , vertical = 12.dp),
-                style = TextStyle(fontSize = 16.sp , fontWeight = FontWeight.Bold),
+           Text(text = "name" , modifier = Modifier.padding(horizontal = 6.dp , vertical = 12.dp),
+                style = TextStyle(fontSize = 14.sp),
                 textAlign = TextAlign.Center
                 )
             Button(onClick = {} , modifier =
-            Modifier.width(150.dp).height(40.dp).align(Alignment.CenterHorizontally)
+            Modifier
+                .width(150.dp)
+                .height(40.dp)
+                .align(Alignment.CenterHorizontally)
             ) {
                 Text(text = "Go to Issues")
             }
@@ -130,28 +180,18 @@ fun DetailsComponent1() {
 
 
 @Composable
-fun IconWithText(icon : ImageVector , text : String , count : String) {
+fun IconWithText(image : @Composable () -> Unit , count : String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start
+        horizontalArrangement = Arrangement.Start,
+        modifier = Modifier.padding(6.dp)
     ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            modifier = Modifier.padding(end = 8.dp) // Adjust padding as needed
+        image()
+        Text(
+            text = count,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.background(MaterialTheme.colorScheme.background)
         )
-        Column {
-            Text(
-                text = text,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.background(MaterialTheme.colorScheme.background)
-            )
-            Text(
-                text = count,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.background(MaterialTheme.colorScheme.background)
-            )
-        }
     }
 }
 
@@ -166,6 +206,8 @@ fun NetworkImageExample(imageUrl: String , modifier: Modifier= Modifier) {
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp)
+            .clip(RoundedCornerShape(16.dp))
+
     )
 }
 

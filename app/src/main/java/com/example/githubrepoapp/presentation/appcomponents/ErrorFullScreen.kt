@@ -31,7 +31,7 @@ fun ErrorFullScreenUI(modifier: Modifier = Modifier, message: String) {
         Text(
             text = message,
             color = MaterialTheme.colorScheme.error,
-            maxLines = 2
+            maxLines = 5
         )
     }
 }
