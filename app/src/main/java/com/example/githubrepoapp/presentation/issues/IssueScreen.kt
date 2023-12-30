@@ -1,10 +1,13 @@
 package com.example.githubrepoapp.presentation.issues
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -18,6 +21,7 @@ import com.example.githubrepoapp.presentation.appcomponents.BaseErrorUI
 import com.example.githubrepoapp.presentation.appcomponents.EmptyScreen
 import com.example.githubrepoapp.presentation.issues.component.CreateIssueList
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun IssueScreen(navController: NavController , owner : String? , repo : String?) {
 
@@ -26,7 +30,13 @@ fun IssueScreen(navController: NavController , owner : String? , repo : String?)
         Column (modifier = Modifier.padding(innerPadding),
             verticalArrangement = Arrangement.spacedBy(16.dp),){
             val viewModel = hiltViewModel<IssuesViewModel>()
-            repo?.let {owner?.let { owner -> viewModel.getIssues(owner, it) } }
+            LaunchedEffect(viewModel) {
+                owner?.let { owner ->
+                    repo?.let { repo ->
+                        viewModel.getIssues(owner, repo)
+                    }
+                }
+            }
             val state by viewModel.state.collectAsState()
             if (state.isLoading == true){
                 CircularProgressIndicator()

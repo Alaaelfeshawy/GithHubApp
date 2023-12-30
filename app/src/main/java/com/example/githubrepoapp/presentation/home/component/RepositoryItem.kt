@@ -92,14 +92,6 @@ fun RepositoryItem(navController: NavController, model: RepositoryModel?) {
                         softWrap = true
                     )
                 }
-                Column(
-                    modifier = Modifier.padding(start = 8.dp, end = 15.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Icon(Icons.Default.Star, null , tint = Color.Yellow)
-                    Text(text = "COUNT", modifier = Modifier.padding(top = 8.dp))
-                }
             }
         }
     }
