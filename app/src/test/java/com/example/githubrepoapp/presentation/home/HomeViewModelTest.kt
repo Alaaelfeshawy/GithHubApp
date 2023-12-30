@@ -37,11 +37,7 @@ class HomeViewModelTest : BaseUnitTest(){
 
     private lateinit var useCase : GetRepositoryListUseCase
 
-
     private lateinit var SUT : HomeViewModel
-
-    @MockK
-    private lateinit var mockResponse : List<RepositoryModel>
 
     private val mockPager: Pager<Int, RepositoryModel> = mockk()
 
@@ -67,12 +63,13 @@ class HomeViewModelTest : BaseUnitTest(){
 
         SUT.getRepositories()
 
+        assertEquals(true,SUT.state.value.isLoading)
+
         advanceUntilIdle()
 
-        SUT.state.value.data?.collect{
-            assertEquals(mockPager.flow.first(),it)
-        }
+        assertEquals(false,SUT.state.value.isLoading)
 
+        assertEquals(mockPaging,SUT.state.value.data?.first() )
 
     }
 

@@ -78,7 +78,7 @@ fun DetailsComponent(navController: NavController, model:RepositoryDetailsModel)
 
             }
             Row(modifier = Modifier.fillMaxWidth()) {
-                NetworkImageExample(
+                NetworkImage(
                     modifier = Modifier.size(150.dp),
                     imageUrl = model.owner?.avatar_url ?: ""
                 )
@@ -108,77 +108,6 @@ fun DetailsComponent(navController: NavController, model:RepositoryDetailsModel)
     }
 }
 
-@Preview
-@Composable
-fun DetailsComponent1() {
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .background(
-                color = Color.White
-            )
-    ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
-            Row(modifier = Modifier.fillMaxWidth()) {
-
-                IconWithText({
-                    Image(
-                        imageVector = Icons.Default.Star,
-                        contentDescription = null,
-                        modifier = Modifier.padding(end = 8.dp) .size(15.dp)// Adjust padding as needed
-                    )
-                },   "count")
-                Spacer(modifier = Modifier.width(15.dp))
-                IconWithText({
-                    Image(
-                        painter = painterResource(id = R.drawable.fork),
-                        contentDescription = null,
-                        modifier = Modifier.padding(end = 8.dp)
-                            .size(15.dp)// Adjust padding as needed
-                    )
-                } ,  "count")
-                Spacer(modifier = Modifier.width(15.dp))
-                IconWithText( {Image(
-                    painter = painterResource(id = R.drawable.watcher),
-                    contentDescription = null,
-                    modifier = Modifier.padding(end = 8.dp)
-                        .size(15.dp)// Adjust padding as needed
-                )}, "count")
-
-            }
-           Row(modifier = Modifier
-               .fillMaxWidth()
-               .padding(6.dp)) {
-               Image(
-                   modifier = Modifier
-                       .size(150.dp)
-                       .clip(RoundedCornerShape(16.dp)),
-                   painter = painterResource(id = R.drawable.no_data_found),
-                   contentDescription = "user image")
-               Text(text = "here will set description isa here will set description isahere will set description isahere will set description isahere will set description isa" ,
-                   modifier = Modifier
-                       .fillMaxWidth()
-                       .align(Alignment.CenterVertically))
-           }
-           Text(text = "name" , modifier = Modifier.padding(horizontal = 6.dp , vertical = 12.dp),
-                style = TextStyle(fontSize = 14.sp),
-                textAlign = TextAlign.Center
-                )
-            Button(onClick = {} , modifier =
-            Modifier
-                .width(150.dp)
-                .height(40.dp)
-                .align(Alignment.CenterHorizontally)
-            ) {
-                Text(text = "Go to Issues")
-            }
-        }
-
-    }
-}
-
-
 @Composable
 fun IconWithText(image : @Composable () -> Unit , count : String) {
     Row(
@@ -196,7 +125,7 @@ fun IconWithText(image : @Composable () -> Unit , count : String) {
 }
 
 @Composable
-fun NetworkImageExample(imageUrl: String , modifier: Modifier= Modifier) {
+fun NetworkImage(imageUrl: String , modifier: Modifier= Modifier) {
 
     val painter = rememberImagePainter(imageUrl)
 
@@ -214,5 +143,5 @@ fun NetworkImageExample(imageUrl: String , modifier: Modifier= Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun NetworkImagePreview() {
-    NetworkImageExample("https://avatars.githubusercontent.com/u/1?v=4")
+    NetworkImage("https://avatars.githubusercontent.com/u/1?v=4")
 }

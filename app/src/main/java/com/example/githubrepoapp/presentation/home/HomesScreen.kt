@@ -8,10 +8,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.githubrepoapp.R
 import com.example.githubrepoapp.presentation.appcomponents.AppScaffold
 import com.example.githubrepoapp.presentation.appcomponents.BaseErrorUI
 import com.example.githubrepoapp.presentation.appcomponents.EmptyScreen
@@ -20,7 +22,7 @@ import com.example.githubrepoapp.presentation.home.component.RepositoryList
 
 @Composable
 fun HomesScreen(navController: NavController) {
-    AppScaffold(title = "Home") { innerPadding ->
+    AppScaffold(title = stringResource(R.string.home_title)) { innerPadding ->
         Column(
             modifier = Modifier.padding(innerPadding),
             verticalArrangement = Arrangement.spacedBy(16.dp),

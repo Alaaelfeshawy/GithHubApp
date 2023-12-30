@@ -1,6 +1,7 @@
 package com.example.githubrepoapp.presentation.home
 
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.githubrepoapp.data.network.models.RepositoryModel
@@ -34,7 +35,7 @@ class HomeViewModel @Inject constructor(
                 }
 
                 is ApiResult.Success -> {
-                    val result = it.value.flow.cachedIn(viewModelScope)
+                    val result = it.value.flow
                     _state.value = _state.value.copy(isLoading = false , data = result)
                 }
             }
