@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -25,7 +26,13 @@ fun DetailsScreen(navController: NavController , owner : String? , repo : String
             verticalArrangement = Arrangement.spacedBy(16.dp),) {
             val viewModel = hiltViewModel<DetailsViewModel>()
 
-            owner?.let { owner -> repo?.let { repo -> viewModel.getRepositoryDetails(owner, repo) } }
+            LaunchedEffect(viewModel) {
+                owner?.let { owner ->
+                    repo?.let { repo ->
+                        viewModel.getRepositoryDetails(owner, repo)
+                    }
+                }
+            }
             val state by viewModel.state.collectAsState()
             state.isLoading?.let { LoadingItem(loading = it) }
             if (state.data != null){
