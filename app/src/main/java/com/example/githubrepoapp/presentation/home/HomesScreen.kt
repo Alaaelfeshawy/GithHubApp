@@ -22,16 +22,21 @@ import com.example.githubrepoapp.presentation.home.component.RepositoryList
 
 @Composable
 fun HomesScreen(navController: NavController) {
+    val viewModel = hiltViewModel<HomeViewModel>()
+    LaunchedEffect(Unit) {
+        viewModel.getRepositories() // Perform side effect in LaunchedEffect
+    }
+    HomeContent(navController, viewModel)
+
+}
+
+@Composable
+private fun HomeContent(navController: NavController , viewModel : HomeViewModel ) {
     AppScaffold(title = stringResource(R.string.home_title)) { innerPadding ->
         Column(
             modifier = Modifier.padding(innerPadding),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            val viewModel = hiltViewModel<HomeViewModel>()
-
-            LaunchedEffect(Unit) {
-                viewModel.getRepositories() // Perform side effect in LaunchedEffect
-            }
             val state by viewModel.state.collectAsState()
 
             state.isLoading?.let { LoadingItem(loading = it) }
@@ -45,7 +50,4 @@ fun HomesScreen(navController: NavController) {
         }
     }
 
-
 }
-
-
